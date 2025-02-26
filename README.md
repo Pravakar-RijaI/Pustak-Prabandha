@@ -1,6 +1,7 @@
-# Library Management System 📚
+# Pustak Prabandha 📚
 
-Its a Project related to Books management for a Libraries 📜.
+About
+A Intelligent library management agent with AI capabilities and recommendation algorithm.
 
 **_NOTE : This isn't an Ecommerce Website (There is no Payment System here)_**
 
@@ -32,19 +33,19 @@ CLIENT can do -
 
 ## Demo
 
-![](https://mraalu.pythonanywhere.com/media/project/LMS.gif)
+
 
 ## Documentation
 
 You can find the Documentation inside /docs/ folder
-![](./docs/LMS.pdf)
+![](./docs/Pustak-Prabandha-Project-Report.pdf)
 
 ## How to run Project locally :
 
 1. Clone the project
 
 ```bash
-  git clone git@github.com:MrAalu/LibraryManagementSystem_MERN.git
+  git clone https://github.com/Pravakar-RijaI/Pustak-Prabandha.git
 ```
 
 2. Goto Both 'Frontend' and 'Backend' folder
@@ -84,7 +85,7 @@ Import respective .JSON file into database Collection
 
 - Populate localhost mongodb database (explained in Step5 above).
 - goto .env and make sure to use correct 'CONNECTION_URL'
-- then, goto main folder location i.e. cd LIBRARYMANAGEMENTSYSTEM_MERN/ and use command :
+- then, goto main folder location i.e. cd Pustak-Prabandha/ and use command :
 
 ```
 docker-compose up
@@ -113,4 +114,8 @@ Starter Login Credentials : (Make sure to import database collections i.e. userd
 
 **Backend :** Node, Express, MongoDB
 
-#### Developed By :- [@MrAalu](https://www.github.com/MrAalu)
+#### Developed By :-
+
+1. Pravakar Rijal
+2. Manish Dhungana
+3. Akash Tolange

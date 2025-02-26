@@ -37,17 +37,18 @@ const Books = () => {
   return (
     <div className='container'>
       {/* Popular Books Heading */}
-      <div className='row'>
+
+      {/* <div className='row'>
         <h1 className='h1 mt-3' style={{ textAlign: 'center' }}>
           Popular Books
         </h1>
 
-        {/* Popular Books */}
+        Popular Books
         <PopularBooks></PopularBooks>
       </div>
 
-      {/* Into the Wild Banner */}
-      <SmallBanner></SmallBanner>
+      Into the Wild Banner
+      <SmallBanner></SmallBanner> */}
 
       <div className='col mt-5 '>
         {/* Browse Collections HEADING */}
@@ -77,7 +78,22 @@ const Books = () => {
             filterActive={filterActive}
           ></CustomPagination>
         </div>
+
       </div>
+
+      {/* Popular Books Heading */}
+      
+      <div className='row'>
+        <h1 className='h1 mt-3' style={{ textAlign: 'center' }}>
+          Popular Books
+        </h1>
+
+        {/* Popular Books */}
+        <PopularBooks></PopularBooks>
+      </div>
+
+      {/* Into the Wild Banner */}
+      <SmallBanner></SmallBanner>
     </div>
   )
 }

@@ -702,4 +702,17 @@
     "$date": "2023-06-02T04:45:59.122Z"
   },
   "__v": 0
-}]
+},{
+  "_id": { "$oid": "65dcf1a1b2c3d4e5f6a7b8c9" },
+  "title": "Artificial Intelligence: A Modern Approach",
+  "image": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1385600294i/27543.jpg",
+  "author": "Stuart Russell, Peter Norvig",
+  "description": "A comprehensive introduction to artificial intelligence covering search algorithms, machine learning, neural networks, and robotics.",
+  "category": "Artificial Intelligence",
+  "available": true,
+  "featured": false,
+  "language": "ENGLISH",
+  "createdAdded": { "$date": "2025-02-26T12:30:00Z" },
+  "__v": 0
+}
+]

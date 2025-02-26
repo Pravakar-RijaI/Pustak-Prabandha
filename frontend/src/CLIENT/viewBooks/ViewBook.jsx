@@ -50,7 +50,7 @@ const ViewBook = () => {
             {bookData.available ? (
               <span> In Stock</span>
             ) : (
-              <span> Out of Stock</span>
+              <span> Currently Unavailable</span>
             )}{' '}
           </h5>
 
@@ -73,7 +73,7 @@ const ViewBook = () => {
                 type='button'
                 className='btn btn-primary me-2 mt-3'
               >
-                Out of Stock
+                Currently Unavailable
               </button>
             )}
 

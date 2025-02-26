@@ -1,6 +1,5 @@
 # Pustak Prabandha 📚
 
-About
 A Intelligent library management agent with AI capabilities and recommendation algorithm.
 
 **_NOTE : This isn't an Ecommerce Website (There is no Payment System here)_**

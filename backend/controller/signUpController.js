@@ -49,7 +49,7 @@ const sendEmail = async (to, otp) => {
     const mailOptions = {
       from: process.env.EMAIL_USERNAME,
       to,
-      subject: 'Verify Email ! Library Management System',
+      subject: 'Verify Email ! Pustak Prabandha',
       html: `<p>Your OTP Code is <strong>${otp}</strong>. This will expire in 60 seconds!</p>`,
     }
 

@@ -36,7 +36,7 @@ CLIENT can do -
 
 ## Documentation
 
-You can find the Documentation inside /docs/ folder
+You can find the Documentation inside docs/Pustak-Prabandha-Project-Report.pdf
 ![](./docs/Pustak-Prabandha-Project-Report.pdf)
 
 ## How to run Project locally :

@@ -1,47 +1,47 @@
-const navbarTitle = 'Pustak Prabandha'
+const navbarTitle = "Pustak Prabandha";
 
-const navbarImage = `/book-min.png`
+const navbarImage = `/book-min.png`;
 
 const navbarLinks = [
   {
-    name: 'Home',
-    url: '/',
+    name: "Home",
+    url: "/",
   },
   {
-    name: 'Books',
-    url: '/books',
+    name: "Books",
+    url: "/books",
   },
   {
-    name: 'About Us',
-    url: '/about',
+    name: "About Us",
+    url: "/about",
   },
   // {
   //  name : '',
   //  url : ''
   // },
-]
+];
 
 const navbarLinksNotAuthenticated = [
   {
-    name: 'Login',
-    url: '/login',
+    name: "Login",
+    url: "/login",
   },
   {
-    name: 'Signup',
-    url: '/signup',
+    name: "Signup",
+    url: "/signup",
   },
-]
+];
 
 const navbarLinksIsAuthenticated = [
   {
-    name: 'Profile',
-    url: '/profile',
+    name: "Profile",
+    url: "/profile",
   },
   // {
   //   name: 'Logout',
   //   url: '/logout',
   // },
-]
+];
 
 export default {
   navbarLinks,
@@ -49,4 +49,4 @@ export default {
   navbarImage,
   navbarLinksNotAuthenticated,
   navbarLinksIsAuthenticated,
-}
+};

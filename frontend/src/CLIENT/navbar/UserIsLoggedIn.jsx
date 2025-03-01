@@ -1,24 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import navbarData from './navbardata'
-import './navbar.css'
+import React from "react";
+import { Link } from "react-router-dom";
+import navbarData from "./navbardata";
+import "./navbar.css";
 
 const UserIsLoggedIn = () => {
-  const { navbarLinksIsAuthenticated } = navbarData
+  const { navbarLinksIsAuthenticated } = navbarData;
   return (
-    <div id='nav-conditional-rendering'>
+    <div id="nav-conditional-rendering">
       {navbarLinksIsAuthenticated.map((map_para, index) => {
-        const { name, url } = map_para
+        const { name, url } = map_para;
         return (
-          <li className='nav-item' key={index}>
-            <Link to={url} className='nav-link'>
+          <li className="nav-item" key={index}>
+            <Link to={url} className="nav-link text-white">
               {name}
             </Link>
           </li>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default UserIsLoggedIn
+export default UserIsLoggedIn;

@@ -9,7 +9,7 @@ export const about_data = [
     id: 2,
     title: `Our Mission`,
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+            eiusmod tempor incididunt ut labore et dolore magna ali.`,
   },
   {
     id: 3,

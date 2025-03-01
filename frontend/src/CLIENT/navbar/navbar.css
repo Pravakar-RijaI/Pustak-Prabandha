@@ -28,14 +28,18 @@ li {
 
 @media screen and (max-width: 1199px) {
   #nav-conditional-rendering {
-    display: flex;
-    flex-direction: column;
+    display: block !important;
   }
 }
 
 /* Navbar mobile button */
 #navbar-mobileview-btn {
   box-shadow: none;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 380px) {

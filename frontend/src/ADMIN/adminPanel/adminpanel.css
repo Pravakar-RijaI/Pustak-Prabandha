@@ -1,39 +1,51 @@
-.adminpanel-container a {
-  text-decoration: none;
-  color: black;
-}
-.adminpanel-container a:hover {
-  text-decoration: none;
-  color: white;
+/* General Styles */
+.adminpanel-container {
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Card Styles */
 .card-admin {
-  background-color: rgba(144, 206, 241, 0.267) !important;
-  width: fit-content;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  text-align: center;
-}
-
-.card-admin-main {
-  display: flex;
-  justify-content: space-evenly;
+  cursor: pointer;
 }
 
 .card-admin:hover {
-  background-color: rgba(160, 173, 243, 0.863) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  background-color: #007bff;
   color: white;
 }
 
-.adminpanel-container {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.452);
-  border-radius: 10px;
+.card-admin:hover .card-admin-icon {
+  color: white;
 }
 
 .card-admin-icon {
   font-size: 3rem;
+  color: #007bff;
+  transition: all 0.3s ease;
 }
 
-.card-admin-icon:hover {
-  font-size: 3rem;
-  color: white;
+.card-admin-title h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-admin-title h5 {
+  font-weight: 500;
+  color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-admin {
+    margin-bottom: 20px;
+  }
 }

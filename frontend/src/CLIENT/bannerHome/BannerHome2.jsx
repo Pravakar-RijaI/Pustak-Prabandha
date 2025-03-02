@@ -71,7 +71,7 @@ const LibraryHero = () => {
           {/* Hero Image */}
           <div className="d-none d-md-flex col-md-6 position-relative">
             <img
-              src="/bhaktapur.jpg"
+              src="/bannerBMC.png"
               alt="Library System"
               className="img-fluid rounded shadow"
             />

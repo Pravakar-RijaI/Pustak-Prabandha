@@ -1,6 +1,7 @@
 const navbarTitle = "Pustak Prabandha";
 
-const navbarImage = `/book-min.png`;
+const navbarImage = `/navbaricon.png`;
+
 
 const navbarLinks = [
   {

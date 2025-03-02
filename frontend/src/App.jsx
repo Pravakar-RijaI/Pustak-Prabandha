@@ -25,7 +25,23 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <Toaster />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: "#4caf50", // Green background for success
+            color: "#fff", // White text
+            padding: "12px 24px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+          },
+          error: {
+            style: {
+              background: "#ff4444", // Red background for errors
+            },
+          },
+        }}
+      />
       {userType === 'admin_user' ? <AdminAPP /> : <ClientApp />}
     </React.Fragment>
   )

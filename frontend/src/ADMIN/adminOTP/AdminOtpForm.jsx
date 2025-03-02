@@ -1,103 +1,88 @@
-import React from 'react'
-import './adminotpform.css'
-import { backend_server } from '../../main'
-import axios from 'axios'
-import { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { backend_server } from "../../main";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import "./adminotpform.css";
 
 const AdminOtpForm = () => {
-  const OTP_VERIFY_API = `${backend_server}/api/v1/signup/verifyEmail`
-  const RESEND_OTP_API = `${backend_server}/api/v1/signup/resendOtp`
+  const OTP_VERIFY_API = `${backend_server}/api/v1/signup/verifyEmail`;
+  const RESEND_OTP_API = `${backend_server}/api/v1/signup/resendOtp`;
 
-  const navigate = useNavigate()
-
-  const [otp_code, setOtp_code] = useState('')
-  const [loading, setLoading] = useState(false)
-
-  const showLoadingToast = () => {
-    return toast.loading('Sending otp code ...', {
-      position: 'top-center',
-      duration: Infinity, // The toast will not automatically close
-    })
-  }
+  const navigate = useNavigate();
+  const [otp_code, setOtp_code] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleVerifyFormSubmit = async () => {
     try {
-      const response = await axios.post(OTP_VERIFY_API, { otpCode: otp_code })
-
-      toast.success(response.data.message)
-
-      navigate('/admin', { replace: true })
+      const response = await axios.post(OTP_VERIFY_API, { otpCode: otp_code });
+      toast.success(response.data.message); // Success toast
+      navigate("/admin", { replace: true });
     } catch (error) {
-      console.log(error.response)
-      if (error.response.data.success == false) {
-        toast(error.response.data.message, {
-          icon: 'ℹ️',
-        })
+      console.log(error.response);
+      if (error.response.data.success === false) {
+        toast.error(error.response.data.message); // Error toast
       }
     }
-  }
+  };
 
   const handleResendFormSubmit = async () => {
-    setLoading(true)
-    const loadingToastId = showLoadingToast()
+    setLoading(true);
+    const loadingToastId = toast.loading("Sending OTP..."); // Loading toast
     try {
-      const response = await axios.post(RESEND_OTP_API, {})
-
-      toast.dismiss(loadingToastId)
-
-      toast(response.data.message, {
-        icon: 'ℹ️',
-      })
-
-      setLoading(false)
+      const response = await axios.post(RESEND_OTP_API, {});
+      toast.dismiss(loadingToastId);
+      toast.success(response.data.message); // Success toast
+      setLoading(false);
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
+      toast.error("Failed to resend OTP. Please try again."); // Error toast
     }
-  }
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault()
-  }
+  };
 
   return (
-    <div className='container text-center my-3'>
-      <h1 className='h1'>Email Verification Form</h1>
-      <p className='p'>
-        Enter your <strong>OTP</strong> code :{' '}
-      </p>
+    <div className="otp-form-container">
+      <div className="otp-form-card">
+        <h1 className="otp-form-title">Email Verification</h1>
+        <p className="otp-form-subtitle">
+          Enter your <strong>OTP</strong> code:
+        </p>
 
-      <form className='form otp-form' onSubmit={handleFormSubmit}>
-        <div className='otp-container'>
-          <input
-            type='text'
-            autoComplete='off'
-            required
-            className='form-control'
-            name='otpCode'
-            value={otp_code}
-            onChange={(e) => setOtp_code(e.target.value)}
-          />
-        </div>
-        <div className='col m-3'>
-          <button
-            className='btn btn-success m-2'
-            onClick={handleVerifyFormSubmit}
-          >
-            Submit
-          </button>
-          <button
-            className='btn btn-secondary m-2'
-            disabled={loading}
-            onClick={handleResendFormSubmit}
-          >
-            {loading ? 'Sending Otp...' : 'Re-send Otp'}
-          </button>
-        </div>
-      </form>
+        <form className="otp-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="otp-input-container">
+            <input
+              type="text"
+              autoComplete="off"
+              required
+              className="otp-input"
+              name="otpCode"
+              value={otp_code}
+              onChange={(e) => setOtp_code(e.target.value)}
+              placeholder="Enter OTP"
+            />
+          </div>
+
+          <div className="otp-button-container">
+            <button
+              type="button"
+              className="otp-button otp-button-submit"
+              onClick={handleVerifyFormSubmit}
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              className="otp-button otp-button-resend"
+              disabled={loading}
+              onClick={handleResendFormSubmit}
+            >
+              {loading ? "Sending OTP..." : "Resend OTP"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminOtpForm
+export default AdminOtpForm;

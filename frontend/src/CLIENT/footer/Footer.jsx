@@ -8,8 +8,8 @@ import "./footer.css";
 
 const visitSection = [
   { id: 1, icon: <FaMapMarkerAlt />, content: "Bhaktapur, Nepal" },
-  { id: 2, icon: <FaPhone />, content: "+01-6613199" },
-  { id: 3, icon: <MdMail />, content: "pustakprabandha@gmail.com" },
+  { id: 2, icon: <FaPhone />, content: <a href='tel:016613199'>+01-6613199</a> },
+  { id: 3, icon: <MdMail />, content: <a href='mailto:pustakprabandha@gmail.com'>pustakprabandha@gmail.com</a> },
 ];
 
 const socials = [

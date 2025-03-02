@@ -43,10 +43,10 @@ const LibraryHero = () => {
 
             {/* CTA Buttons */}
             <div className="mt-4">
-              <a href="#" className="btn btn-primary me-3 py-2 mb-2 mb-md-0">
+              <a href="/books" className="btn btn-primary me-3 py-2 mb-2 mb-md-0">
                 Explore Library
               </a>
-              <a href="#" className="btn btn-outline-primary py-2">
+              <a href="/signup" className="btn btn-outline-primary py-2">
                 Get Membership
               </a>
             </div>

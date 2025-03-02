@@ -32,6 +32,7 @@ const AdminPanel = () => {
       <Row className='g-4'>
         {/* Total Books Card */}
         <Col xs={12} md={6} lg={4}>
+        <a href='/admin/managebooks'>
           <Card className='card-admin h-100'>
             <Card.Body className='text-center'>
               <GiBookshelf className='card-admin-icon mb-3' />
@@ -41,10 +42,12 @@ const AdminPanel = () => {
               </Card.Title>
             </Card.Body>
           </Card>
+          </a>
         </Col>
 
         {/* Issued Books Card */}
         <Col xs={12} md={6} lg={4}>
+        <a href='/admin/issuedbooks'>
           <Card className='card-admin h-100'>
             <Card.Body className='text-center'>
               <GiBookPile className='card-admin-icon mb-3' />
@@ -54,10 +57,12 @@ const AdminPanel = () => {
               </Card.Title>
             </Card.Body>
           </Card>
+        </a>
         </Col>
 
         {/* Book Requests Card */}
         <Col xs={12} md={6} lg={4}>
+        <a href='/admin/booksrequests'>
           <Card className='card-admin h-100'>
             <Card.Body className='text-center'>
               <FiGitPullRequest className='card-admin-icon mb-3' />
@@ -67,10 +72,12 @@ const AdminPanel = () => {
               </Card.Title>
             </Card.Body>
           </Card>
+          </a>
         </Col>
 
         {/* Registered Users Card */}
         <Col xs={12} md={6} lg={4}>
+        <a href='/admin/viewusers'>
           <Card className='card-admin h-100'>
             <Card.Body className='text-center'>
               <FaUserFriends className='card-admin-icon mb-3' />
@@ -80,6 +87,7 @@ const AdminPanel = () => {
               </Card.Title>
             </Card.Body>
           </Card>
+          </a>
         </Col>
 
         {/* Authors Listed Card */}

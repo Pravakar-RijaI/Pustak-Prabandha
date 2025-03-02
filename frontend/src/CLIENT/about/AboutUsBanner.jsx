@@ -7,8 +7,12 @@ const AboutUsBanner = () => {
     <div className="about-div-with-background border mt-5">
       <Container>
         <Row className="about-quote-container mt-5 me-1">
-          <h1>"He has the most, who is most content with the least."</h1>
-          <p>― Lord Buddha</p>
+          <Col>
+            <h1 className="quote-text">
+              "He has the most, who is most content with the least."
+            </h1>
+            <p className="quote-author">― Lord Buddha</p>
+          </Col>
         </Row>
       </Container>
     </div>

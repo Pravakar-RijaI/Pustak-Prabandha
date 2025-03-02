@@ -1,29 +1,54 @@
+/* Sidebar Container */
 .sidebar {
-  margin-top: 30px;
+  margin-top: 60px;
   padding: 30px 0;
   left: 0;
-  background-color: rgba(216, 224, 245, 0.267);
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient background */
   height: 100vh;
   position: fixed;
+  width: 250px; /* Fixed width for the sidebar */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  color: white; /* Text color */
 }
 
-/* Style for the navigation items */
+/* Navigation List */
+.sidebar .nav {
+  padding: 0 20px;
+}
+
+/* Navigation Items */
 .sidebar-nav-item {
   list-style: none;
+  margin-bottom: 10px; /* Space between items */
 }
 
-/* Add hover effect for links */
-.sidebar-nav-link:hover {
-  background-color: #ddd;
-}
-
+/* Navigation Links */
 .sidebar-nav-link {
-  background-color: rgba(216, 224, 245, 0.678) !important;
-  border-radius: 5px;
-  color: rgb(43, 40, 40) !important;
-  /* font-size: large !important; */
-  font-size: 0.8rem !important;
-  margin-top: 15px;
-  margin-left: 15px;
-  width: auto !important;
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  border-radius: 8px;
+  color: white !important;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: transparent !important; /* Remove background */
+}
+
+/* Hover Effect */
+.sidebar-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important; /* Light hover effect */
+  transform: translateX(5px); /* Slight movement on hover */
+}
+
+/* Active Link */
+.sidebar-nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2) !important; /* Highlight active link */
+  font-weight: bold;
+}
+
+/* Icons */
+.sidebar-nav-link .icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
 }

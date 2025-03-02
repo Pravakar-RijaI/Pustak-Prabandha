@@ -110,7 +110,7 @@ const AddNewBook = () => {
   };
 
   return (
-    <div className="container mt-2">
+    <div className="container mt-5">
       <h1 className="h1 text-center">Add New Book</h1>
 
       <Container className="my-5">

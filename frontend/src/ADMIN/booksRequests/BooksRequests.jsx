@@ -58,8 +58,8 @@ const BooksRequests = () => {
   }
 
   return (
-    <div className='container mt-2'>
-      <h1 className='h1 text-center'>Books Request's</h1>
+    <div className='container mt-5'>
+      <h1 className='h1 text-center'>Books Requests</h1>
       {isAnyBooksPending ? (
         pendingBooks.length > 0 ? (
           <div className='row mt-3'>

@@ -29,7 +29,7 @@ const IssuedBooks = () => {
   }, [])
 
   return (
-    <div className='container mt-2'>
+    <div className='container mt-5'>
       <h1 className='h1 text-center'>Issued Books</h1>
 
       {/* Issue Book to User Button */}

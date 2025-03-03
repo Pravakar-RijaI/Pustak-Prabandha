@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import { backend_server } from "../../main";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import "./AddNewBook.css"; // Custom CSS for styling
 
 const AddNewBook = () => {
   const API_URL = `${backend_server}/api/v1/books`;
@@ -14,7 +15,7 @@ const AddNewBook = () => {
   const empty_inputfield = {
     title: "",
     author: "",
-    description: "some random description about book",
+    description: "Some random description about the book",
     category: "",
     available: true,
     featured: false,
@@ -24,8 +25,9 @@ const AddNewBook = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState();
   const [inputvalue, setInputValue] = useState(empty_inputfield);
+  const [relatedCategories, setRelatedCategories] = useState([]);
 
-  // create a preview as a side effect, whenever selected file is changed
+  // Create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
     if (!selectedImage) {
       setImagePreview(undefined);
@@ -35,7 +37,7 @@ const AddNewBook = () => {
     const objectUrl = URL.createObjectURL(selectedImage);
     setImagePreview(objectUrl);
 
-    // free memory when ever this component is unmounted
+    // Free memory when the component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedImage]);
 
@@ -48,9 +50,6 @@ const AddNewBook = () => {
     setInputValue({ ...inputvalue, [name]: value });
   };
 
-  // ALL Books Categories
-  const [relatedCategories, setRelatedCategories] = useState([]);
-
   const handleCategorySelection = (selectedCategory) => {
     setInputValue({ ...inputvalue, category: selectedCategory.toUpperCase() });
     setRelatedCategories([]);
@@ -60,9 +59,7 @@ const AddNewBook = () => {
     const { name, value } = e.target;
     setInputValue({ ...inputvalue, [name]: value.toUpperCase() });
 
-    // CALL API to Fetch all CATEGORIES so USER CAN Select
     try {
-      // TODO , use POST Request and send what letters user types
       const data = await axios.post(API_URL_ALL_BOOK_CATEGORIES, {
         user_input_category: value,
       });
@@ -80,12 +77,11 @@ const AddNewBook = () => {
 
   const handleOnChangeSelectOptions = (e) => {
     const { name, value } = e.target;
-    setInputValue({ ...inputvalue, [name]: value === "true" ? true : false });
+    setInputValue({ ...inputvalue, [name]: value === "true" });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(inputvalue)
 
     const formData = new FormData();
     formData.append("image", selectedImage);
@@ -99,21 +95,21 @@ const AddNewBook = () => {
 
     try {
       await axios.post(API_URL, formData);
-      toast.success("new Book Created Successfully");
+      toast.success("New book created successfully!");
 
       setInputValue(empty_inputfield);
       setSelectedImage(null);
     } catch (error) {
-      console.error("Error creating new Book : ", error.response);
-      toast.error("Error creating new Book");
+      console.error("Error creating new book:", error.response);
+      toast.error("Error creating new book. Please try again.");
     }
   };
 
   return (
-    <div className="container mt-2">
-      <h1 className="h1 text-center">Add New Book</h1>
+    <div className="add-new-book-container">
+      <h1 className="text-center mb-4">Add New Book</h1>
 
-      <Container className="my-5">
+      <Container className="add-new-book-form">
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col}>
@@ -122,7 +118,7 @@ const AddNewBook = () => {
                 type="text"
                 onChange={handleOnChange}
                 value={inputvalue.title}
-                placeholder="Title"
+                placeholder="Enter title"
                 name="title"
                 autoComplete="off"
                 required
@@ -134,21 +130,23 @@ const AddNewBook = () => {
                 type="text"
                 onChange={handleOnChange}
                 value={inputvalue.author}
-                placeholder="Author"
+                placeholder="Enter author"
                 name="author"
                 autoComplete="off"
                 required
               />
             </Form.Group>
           </Row>
+
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Description</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
+                rows={3}
                 onChange={handleOnChange}
                 value={inputvalue.description}
-                placeholder="Description"
+                placeholder="Enter description"
                 name="description"
                 autoComplete="off"
                 required
@@ -160,16 +158,16 @@ const AddNewBook = () => {
                 type="text"
                 onChange={handleCategoryOnChange}
                 value={inputvalue.category}
-                placeholder="Category"
+                placeholder="Enter category"
                 name="category"
                 autoComplete="off"
                 required
               />
-              <div>
+              <div className="category-suggestions">
                 {relatedCategories.map((category) => (
                   <div
                     key={category}
-                    className="clickable-category"
+                    className="category-suggestion"
                     onClick={() => handleCategorySelection(category)}
                   >
                     {category}
@@ -178,6 +176,7 @@ const AddNewBook = () => {
               </div>
             </Form.Group>
           </Row>
+
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Language</Form.Label>
@@ -185,21 +184,16 @@ const AddNewBook = () => {
                 type="text"
                 onChange={handleLanguageOnChange}
                 value={inputvalue.language}
-                placeholder="Language"
+                placeholder="Enter language"
                 name="language"
                 autoComplete="off"
                 required
               />
             </Form.Group>
-            <Form.Group
-              as={Col}
-              className="d-flex"
-              style={{ alignItems: "center" }}
-            >
-              <div className="me-3 ">
+            <Form.Group as={Col} className="d-flex align-items-center">
+              <div className="me-3">
                 <Form.Label>Available</Form.Label>
                 <Form.Select
-                  style={{ width: "fit-content" }}
                   onChange={handleOnChangeSelectOptions}
                   value={inputvalue.available.toString()}
                   name="available"
@@ -209,11 +203,9 @@ const AddNewBook = () => {
                   <option value="false">FALSE</option>
                 </Form.Select>
               </div>
-
               <div className="mx-3">
                 <Form.Label>Featured</Form.Label>
                 <Form.Select
-                  style={{ width: "fit-content" }}
                   onChange={handleOnChangeSelectOptions}
                   value={inputvalue.featured.toString()}
                   name="featured"
@@ -225,11 +217,11 @@ const AddNewBook = () => {
               </div>
             </Form.Group>
           </Row>
+
           <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Image</Form.Label>
               <Form.Control
-                style={{ width: "fit-content" }}
                 type="file"
                 onChange={handleImageChange}
                 accept="image/*"
@@ -238,26 +230,25 @@ const AddNewBook = () => {
               {selectedImage && (
                 <img
                   src={imagePreview}
-                  alt=""
-                  width={"200px"}
-                  style={{ marginTop: "20px" }}
+                  alt="Preview"
+                  className="image-preview"
                 />
               )}
             </Form.Group>
           </Row>
 
           <div className="text-center mt-5">
-            <Button type="submit" variant="success">
+            <Button type="submit" variant="success" className="submit-button">
               Submit
             </Button>
-
-            <button
+            <Button
               type="button"
-              className="btn btn-secondary mx-1"
+              variant="secondary"
+              className="go-back-button"
               onClick={() => navigate(-1)}
             >
               Go Back
-            </button>
+            </Button>
           </div>
         </Form>
       </Container>

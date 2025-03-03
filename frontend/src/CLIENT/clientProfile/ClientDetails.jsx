@@ -1,168 +1,136 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { Button, Modal, Row, Col, Form } from 'react-bootstrap'
-import { backend_server } from '../../main'
-import axios from 'axios'
-import { Toaster, toast } from 'react-hot-toast'
-import { BsEye, BsEyeSlash } from 'react-icons/bs'
-import { useNavigate } from 'react-router-dom'
-import { useLoginState } from '../../LoginState'
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Row, Col, Form } from 'react-bootstrap';
+import { backend_server } from '../../main';
+import axios from 'axios';
+import { Toaster, toast } from 'react-hot-toast';
+import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { useLoginState } from '../../LoginState';
+import { ClipLoader } from 'react-spinners';
 
 const ClientDetails = ({ userData }) => {
-  const UpdateUser_API_URL = `${backend_server}/api/v1/users`
-  const [showEditModal, setShowEditModal] = useState(false)
-  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false)
-  const [showPassword, setShowPassword] = useState(false) // State variable to track password visibility
-  const navigate = useNavigate()
-
-  const handleEditModalClose = () => {
-    setShowEditModal(false)
-  }
-
-  const handleEditModalShow = () => {
-    setShowEditModal(true)
-  }
-
-  const handlePasswordModalClose = () => {
-    setShowChangePasswordModal(false)
-  }
-
-  const handlePasswordModalShow = () => {
-    setShowChangePasswordModal(true)
-  }
+  const UpdateUser_API_URL = `${backend_server}/api/v1/users`;
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [inputFieldPassword, setInputFieldPassword] = useState({
     old_password: '',
     new_password: '',
     confirm_password: '',
-  })
+  });
 
   const [inputFieldNormal, setInputFieldNormal] = useState({
     username: '',
     email: '',
     phone: '',
-  })
+  });
 
   const handleOnChangeNormal = (e) => {
     setInputFieldNormal({
       ...inputFieldNormal,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleOnChangePassword = (e) => {
     setInputFieldPassword({
       ...inputFieldPassword,
       [e.target.name]: e.target.value,
-    })
-  }
-
-  // Updates user Details
-  const showLoadingToast = () => {
-    return toast.loading('Loading...', {
-      position: 'top-center',
-      duration: Infinity, // The toast will not automatically close
-    })
-  }
-
-  const userLoginState = useLoginState()
+    });
+  };
 
   const handleUpdateProfile = async (e) => {
-    e.preventDefault()
-    const { username, email, phone } = inputFieldNormal
+    e.preventDefault();
+    setLoading(true);
+    const { username, email, phone } = inputFieldNormal;
 
-    // Validate email format
-    const emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/
-    const isValid = emailRegex.test(email)
-    // console.log(isValid)
-    if (!isValid) {
-      toast.error('Invalid Email Format')
+    const emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Invalid Email Format');
+      setLoading(false);
+      return;
     }
-    const loadingToastId = showLoadingToast()
+
     try {
       const response = await axios.patch(UpdateUser_API_URL, {
         username,
         email,
         phone,
-      })
+      });
 
-      toast.dismiss(loadingToastId)
-      if (response.data.ENTER_OTP == true) {
-        toast.success(response.data.message)
-
-        // reset OR set user login state to NULL
-        userLoginState.logout()
-
-        navigate('/otp', { replace: true })
+      if (response.data.ENTER_OTP) {
+        toast.success(response.data.message);
+        userLoginState.logout();
+        navigate('/otp', { replace: true });
       } else {
-        toast.success('Update Success')
+        toast.success('Update Success');
       }
     } catch (error) {
-      toast.dismiss(loadingToastId)
-      console.log(error.response)
+      console.log(error.response);
+      toast.error('An error occurred');
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
-  // Updates password
   const handleUpdatePassword = async (e) => {
-    e.preventDefault()
-    const { confirm_password, new_password, old_password } = inputFieldPassword
+    e.preventDefault();
+    setLoading(true);
+    const { confirm_password, new_password, old_password } = inputFieldPassword;
 
-    if (new_password === confirm_password) {
-      // Validate alphanumeric password with a must Special character
-      const alphanumericRegex =
-        /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
-
-      const isPasswordValid = alphanumericRegex.test(new_password)
-      if (!isPasswordValid) {
-        return toast.error(
-          'Password must be alphanumeric and contain at least one special character'
-        )
-      }
-
-      try {
-        const response = await axios.patch(UpdateUser_API_URL, {
-          old_password,
-          new_password,
-        })
-
-        toast.success('Password Changed Successfully')
-      } catch (error) {
-        console.log(error)
-        console.log(error.response)
-        toast.error(error.response.data.message)
-      }
-    } else {
-      toast.error('Password Doesnt Match')
+    if (new_password !== confirm_password) {
+      toast.error('Passwords do not match');
+      setLoading(false);
+      return;
     }
-  }
+
+    const alphanumericRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+    if (!alphanumericRegex.test(new_password)) {
+      toast.error('Password must be alphanumeric and contain at least one special character');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      await axios.patch(UpdateUser_API_URL, {
+        old_password,
+        new_password,
+      });
+      toast.success('Password Changed Successfully');
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setInputFieldNormal({ ...userData })
-  }, [])
+    setInputFieldNormal({ ...userData });
+  }, [userData]);
 
   return (
     <div className='container my-3'>
-      {/* Image + Userdetails Box Section */}
-      <Row className='align-items-center '>
-        {/* Image Section */}
+      <Toaster />
+      <Row className='align-items-center'>
         <Col md={4} className='text-center mx-1 my-2'>
           <div className='profile-details border p-4 shadow'>
             <img
               style={{ width: '100px' }}
               className='img-fluid'
               src='/clientprofile.png'
+              alt='Profile'
             />
             <h5 className='mt-3'>{userData.username.toUpperCase()}</h5>
           </div>
         </Col>
-
-        {/* Other user INFO */}
         <Col md={6}>
           <div className='profile-details border p-4 shadow mx-1 my-2'>
             <h5>Email: {userData.email}</h5>
             <hr />
-
             <h5>Phone: {userData.phone}</h5>
             <hr />
             <h5>Total Books: {userData.totalAcceptedBooks}</h5>
@@ -170,37 +138,23 @@ const ClientDetails = ({ userData }) => {
         </Col>
       </Row>
 
-      {/* Edit and Change Button */}
       <Row>
         <div className='profile-buttons text-center'>
-          {/* Edit PROFILE btn */}
-          <Button
-            variant='primary'
-            onClick={handleEditModalShow}
-            className='mx-2 my-3'
-          >
+          <Button variant='primary' onClick={() => setShowEditModal(true)} className='mx-2 my-3'>
             Edit Profile
           </Button>
-
-          {/* Change PASSWORD btn */}
-          <Button
-            variant='secondary'
-            onClick={handlePasswordModalShow}
-            className='mx-2 my-3'
-          >
+          <Button variant='secondary' onClick={() => setShowChangePasswordModal(true)} className='mx-2 my-3'>
             Change Password
           </Button>
         </div>
       </Row>
 
-      {/* Edit Profile Modal */}
-      <Modal show={showEditModal} onHide={handleEditModalClose} centered>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
-          <Form onSubmit={(e) => handleUpdateProfile(e)}>
+          <Form onSubmit={handleUpdateProfile}>
             <Form.Group controlId='username'>
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -214,7 +168,6 @@ const ClientDetails = ({ userData }) => {
                 autoComplete='off'
               />
             </Form.Group>
-
             <Form.Group controlId='email'>
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -228,7 +181,6 @@ const ClientDetails = ({ userData }) => {
                 readOnly
               />
             </Form.Group>
-
             <Form.Group controlId='phone'>
               <Form.Label>Phone</Form.Label>
               <Form.Control
@@ -243,35 +195,22 @@ const ClientDetails = ({ userData }) => {
                 maxLength='10'
               />
             </Form.Group>
-
             <Form.Group className='text-center my-2'>
-              <button type='submit' className='btn btn-success'>
-                Update
+              <button type='submit' className='btn btn-success' disabled={loading}>
+                {loading ? <ClipLoader size={20} color='#fff' /> : 'Update'}
               </button>
             </Form.Group>
           </Form>
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleEditModalClose}>
-            Go Back
-          </Button>
-        </Modal.Footer>
       </Modal>
 
-      {/* Change Password Modal */}
-      <Modal
-        show={showChangePasswordModal}
-        onHide={handlePasswordModalClose}
-        centered
-      >
+      <Modal show={showChangePasswordModal} onHide={() => setShowChangePasswordModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
-          <Form onSubmit={(e) => handleUpdatePassword(e)}>
-            <Form.Group controlId='old password'>
+          <Form onSubmit={handleUpdatePassword}>
+            <Form.Group controlId='old_password'>
               <Form.Label>Old Password</Form.Label>
               <Form.Control
                 type='password'
@@ -283,8 +222,7 @@ const ClientDetails = ({ userData }) => {
                 value={inputFieldPassword.old_password}
               />
             </Form.Group>
-
-            <Form.Group controlId='new password'>
+            <Form.Group controlId='new_password'>
               <Form.Label>New Password</Form.Label>
               <Form.Control
                 required
@@ -296,12 +234,11 @@ const ClientDetails = ({ userData }) => {
                 value={inputFieldPassword.new_password}
               />
             </Form.Group>
-
-            <Form.Group controlId='confirm password'>
-              <Form.Label>Confirm new Password</Form.Label>
+            <Form.Group controlId='confirm_password'>
+              <Form.Label>Confirm Password</Form.Label>
               <div className='password-field'>
                 <Form.Control
-                  type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
+                  type={showPassword ? 'text' : 'password'}
                   required
                   minLength={5}
                   placeholder='Re-enter new Password'
@@ -310,32 +247,23 @@ const ClientDetails = ({ userData }) => {
                   value={inputFieldPassword.confirm_password}
                 />
                 <span
-                  onClick={() =>
-                    setShowPassword((prevShowPassword) => !prevShowPassword)
-                  }
+                  onClick={() => setShowPassword(!showPassword)}
                   style={{ cursor: 'pointer' }}
                 >
                   {showPassword ? <BsEye /> : <BsEyeSlash />}
                 </span>
               </div>
             </Form.Group>
-
             <Form.Group className='text-center my-2'>
-              <button type='submit' className='btn btn-success'>
-                Update
+              <button type='submit' className='btn btn-success' disabled={loading}>
+                {loading ? <ClipLoader size={20} color='#fff' /> : 'Update'}
               </button>
             </Form.Group>
           </Form>
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handlePasswordModalClose}>
-            Go Back
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default ClientDetails
+export default ClientDetails;

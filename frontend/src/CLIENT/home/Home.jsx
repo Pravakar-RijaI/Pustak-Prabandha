@@ -7,6 +7,7 @@ import RecentlyAddedBooks from '../recentlyAddedBooks/RecentlyAddedBooks'
 import { Row } from 'react-bootstrap'
 import RecommendedBooks from '../recommendedBooks/RecommendedBooks'
 import Books from '../books/Books'
+import ChatbotComponent from '../chatbot/Chatbot'
 // import FilterBooksForm from '../books/FilterBooksForm'
 // import BrowseCollectionBooks from '../books/BrowseCollectionBooks'
 const Home = () => {
@@ -34,7 +35,7 @@ const Home = () => {
         <Row>
           <FeaturedBooks></FeaturedBooks>
         </Row>
-        
+        <ChatbotComponent />
       </div>
     </div>
   )

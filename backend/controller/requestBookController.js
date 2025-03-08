@@ -2,8 +2,31 @@ const BookTransaction = require("../models/bookTransaction");
 const BookSchema = require("../models/bookScheme");
 const PopularBookSchema = require("../models/PopularBooks");
 const UserSchema = require("../models/signUpModel");
-
+const nodemailer = require("nodemailer");
 const UserLastBookModel = require("../models/userLastBook");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USERNAME, // Replace with your email
+    pass: process.env.EMAIL_PASSWORD, // Replace with your app password
+  },
+});
+
+const sendEmailNotification = async (email, subject, text) => {
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: email,
+    subject: subject,
+    text: text,
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`Email sent to ${email}`);
+  } catch (error) {
+    console.error("Email sending failed:", error);
+  }
+};
 
 // Creates a new User book request transaction
 const postBooks = async (req, res) => {
@@ -156,6 +179,8 @@ const postIssueBooks = async (req, res) => {
       totalRequestedBooks: updatedTotalRequestedBooks,
     });
 
+    await sendEmailNotification(userEmail, "Book Issued", `Your book "${book.title}" has been issued.`);
+
     // Store users last borrowed book
     const checkUsersLastBook = await UserLastBookModel.find({ userId });
     if (checkUsersLastBook.length != 0) {
@@ -285,6 +310,9 @@ const patchRequestedBooks = async (req, res) => {
       totalAcceptedBooks: updatedTotalAcceptedBooks,
       totalRequestedBooks: updatedTotalRequestedBooks,
     });
+
+    await sendEmailNotification(transaction.userEmail, "Book Returned", `You have returned "${transaction.bookTitle}". Fine: $${fine}`);
+
   }
 
   // If "ACCEPTED" then push that into popular books collection
@@ -323,6 +351,9 @@ const patchRequestedBooks = async (req, res) => {
         lastBorrowedBookTitle: bookTitle,
       });
     }
+    
+    await sendEmailNotification(transaction.userEmail, "Book Ready for Pickup", `Your book "${transaction.bookTitle}" is ready for pickup.`);
+
 
     createOrUpdatePopularBook(bookId, bookTitle);
   } else if (issueStatus === "CANCELLED") {

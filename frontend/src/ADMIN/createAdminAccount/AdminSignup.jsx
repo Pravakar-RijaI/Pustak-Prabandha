@@ -11,6 +11,7 @@ const AdminSignup = () => {
   const refUsername = useRef(null)
 
   const Empty_Form_Field = {
+    examRollNo: '',
     username: '',
     email: '',
     phone: '',
@@ -63,12 +64,14 @@ const AdminSignup = () => {
 
       const loadingToastId = showLoadingToast()
 
+      const examRollNo = textField.examRollNo
       const username = textField.username
       const email = textField.email
       const phone = textField.phone
       const password = textField.password
 
       const response = await axios.post(API_URL, {
+        examRollNo,
         username,
         email,
         phone,
@@ -119,6 +122,23 @@ const AdminSignup = () => {
       <div className='signup-middlediv'>
         <form onSubmit={HandleFormSubmit} method='post'>
           <div className='first-row-form'>
+          <div className='examRollNo-field-div'>
+              <label htmlFor='examRollNofield'>Exam Roll-No : </label>
+              <input
+                type='text'
+                placeholder='Enter Exam Roll Number..'
+                id='examRollNofield'
+                value={textField.examRollNo}
+                onChange={HandleOnChange}
+                name='examRollNo'
+                autoComplete='off'
+                required
+                ref={refUsername}
+                maxLength='20'
+                minLength='5'
+              />
+            </div>
+
             <div className='username-field-div'>
               <label htmlFor='usernamefield'>Username : </label>
               <input

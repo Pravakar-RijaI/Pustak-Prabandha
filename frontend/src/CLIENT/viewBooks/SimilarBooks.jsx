@@ -31,7 +31,7 @@ const SimilarBooks = () => {
   }, [])
 
   return (
-    <div className='row mb-3'>
+    <div className='row mb-5'>
       <h2 className='h2 my-2'>Similar Books you might Like :</h2>
       {similarBooks.length > 0 ? (
         similarBooks.map((book) => {

@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { backend_server } from '../../main';
-import './viewBooks.css';
-import useFetch from '../../useFetch';
-import RequestBook from '../requestBooks/RequestBook';
-import SimilarBooks from './SimilarBooks';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { backend_server } from "../../main";
+import "./viewBooks.css";
+import useFetch from "../../useFetch";
+import RequestBook from "../requestBooks/RequestBook";
+import SimilarBooks from "./SimilarBooks";
 
 const ViewBook = () => {
-  const { id } = useParams();
+  const { id } = useParams(); //fetching book id from url params
   const API_URL = `${backend_server}/api/v1/books/${id}`;
 
   const { request_Book } = RequestBook();
   const navigate = useNavigate();
   const getData = useFetch(API_URL);
 
-  const data = getData.fetched_data?.data;
+  // Destructuring fetched data
+  const data = getData.fetched_data.data;
   const imageFullPath = getData.imagePath;
-  
   const [bookData, setBookData] = useState({});
 
   useEffect(() => {

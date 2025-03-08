@@ -83,8 +83,8 @@
 }
 
 /* PhoneNumber Input Field ko UP/DOWN ARROW remove gareko  */
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -163,7 +163,7 @@ button:active {
   }
 
   /* Input Fields CSS */
-  .signup-middlediv input[type='text'] {
+  .signup-middlediv input[type="text"] {
     margin-bottom: 2rem;
   }
 
@@ -188,6 +188,9 @@ button:active {
 
 #p-fail {
   color: red;
+}
+.bottom-margin {
+  margin-bottom: 8rem !important;
 }
 
 /* FOR TOGGELING PASSWORD  */

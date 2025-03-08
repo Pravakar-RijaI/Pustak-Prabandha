@@ -10,7 +10,6 @@ import FilterBooksForm from './FilterBooksForm';
 
 const Books = () => {
   const API_URL = `${backend_server}/api/v1/book/`;
-
   const [bookData, setBookData] = useState([]);
   const [searchResult, setSearchResult] = useState(true);
   const [filterActive, setFilterActive] = useState(false);
@@ -49,7 +48,6 @@ const Books = () => {
           bookData={bookData}
           searchResult={searchResult}
         />
-
         {/* Pagination */}
         {!filterActive && (
           <div className='my-3 d-flex justify-content-center'>

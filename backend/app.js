@@ -25,6 +25,9 @@ const loginRouter = require("./routes/loginRoutes");
 const logoutRouter = require("./routes/logoutRoute");
 const forgotpasswordRouter = require("./routes/forgotpassword");
 
+const aiSearchRouter = require("./routes/aiSearchRouter");
+const semanticSearchRouter = require("./routes/semanticSearchRouter");
+const aiChatbotRouter = require("./routes/aiChatbotRouter");
 const filterRouter = require("./routes/filterRoutes");
 
 const adminHomePageInfoRouter = require("./routes/adminHomePageInfoRoute");
@@ -33,7 +36,7 @@ const CustomError = require("./errorHandler/CustomError");
 const PageNotFound = require("./errorHandler/PageNotFound");
 
 // Allow CORS Policy
-// app.use(cors())
+//app.use(cors());
 
 // For recieiving httpOnly cookies
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
@@ -62,6 +65,9 @@ app.use("/api/v1/forgotpassword", forgotpasswordRouter);
 
 // Filter Books
 app.use("/api/v1/filter", filterRouter);
+app.use("/api/v1/ai-search", aiSearchRouter);
+app.use("/api/v1/semantic-search", semanticSearchRouter);
+app.use("/api/v1/ai-chatbot", aiChatbotRouter);
 
 // ALL BOOKS CRUD (Dynamic Middleware Setup on API Endpoints)
 app.use("/api/v1/books", booksRouter);

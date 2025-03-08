@@ -15,7 +15,7 @@ const ViewUsers = () => {
   }, [data])
 
   return (
-    <div className='container mt-2'>
+    <div className='container mt-5'>
       <h1 className='h1 text-center'>View User's</h1>
 
       <div className='row mt-3'>

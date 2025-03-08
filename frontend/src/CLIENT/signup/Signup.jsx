@@ -26,7 +26,7 @@ const Signup = () => {
   const showLoadingToast = () => {
     return toast.loading("Registering User...", {
       position: "top-center",
-      duration: Infinity,
+      duration: Infinity, // The toast will not automatically close
     });
   };
 
@@ -35,22 +35,25 @@ const Signup = () => {
       e.preventDefault();
       setLoading(true);
 
+      // Validate email format
       const emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/;
       if (!emailRegex.test(textField.email)) {
         setLoading(false);
         return toast("Invalid Email Format", { icon: "ℹ️" });
       }
 
+      // Validate alphanumeric password with a must Special character
       const alphanumericRegex =
         /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
       if (!alphanumericRegex.test(textField.password)) {
         setLoading(false);
         return toast(
-          "Password must be alphanumeric with one special character",
+          "Password must be alphanumeric and contain at least one special character",
           { icon: "ℹ️" }
         );
       }
 
+      // Check if passwords match
       if (textField.password !== textField.confirm_password) {
         setLoading(false);
         return toast("Password doesn't match", { icon: "ℹ️" });
@@ -101,6 +104,7 @@ const Signup = () => {
         </div>
 
         <form onSubmit={HandleFormSubmit}>
+          {/* Username Field */}
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
               Username
@@ -115,9 +119,12 @@ const Signup = () => {
               placeholder="Enter your username"
               required
               ref={refUsername}
+              maxLength="20"
+              minLength="5"
             />
           </div>
 
+          {/* Email Field */}
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Email
@@ -133,6 +140,26 @@ const Signup = () => {
             />
           </div>
 
+          {/* Phone Field */}
+          <div className="mb-3">
+            <label htmlFor="phone" className="form-label">
+              Phone No.
+            </label>
+            <input
+              type="text"
+              name="phone"
+              value={textField.phone}
+              onChange={HandleOnChange}
+              className="form-control"
+              placeholder="e.g. 98..."
+              required
+              pattern="9\d{9}"
+              minLength="10"
+              maxLength="10"
+            />
+          </div>
+
+          {/* Password Field */}
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Password
@@ -146,6 +173,7 @@ const Signup = () => {
                 className="form-control pe-5"
                 placeholder="Enter password"
                 required
+                minLength="5"
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
@@ -157,6 +185,7 @@ const Signup = () => {
             </div>
           </div>
 
+          {/* Confirm Password Field */}
           <div className="mb-3">
             <label htmlFor="confirm_password" className="form-label">
               Confirm Password
@@ -170,6 +199,7 @@ const Signup = () => {
                 className="form-control pe-5"
                 placeholder="Confirm your password"
                 required
+                minLength="5"
               />
               <span
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -181,6 +211,7 @@ const Signup = () => {
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="btn btn-primary w-100 mt-3"
@@ -190,6 +221,7 @@ const Signup = () => {
           </button>
         </form>
 
+        {/* Login Link */}
         <div className="text-center mt-4">
           <span>Already have an account?</span>
           <Link to="/login" className="ms-1 text-decoration-none">
@@ -197,6 +229,9 @@ const Signup = () => {
           </Link>
         </div>
       </div>
+
+      {/* Toast Notifications */}
+      <Toaster />
     </div>
   );
 };

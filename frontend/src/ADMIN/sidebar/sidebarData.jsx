@@ -16,7 +16,7 @@ export const sidebarData = [
   },
   {
     id: 4,
-    title: `Books Request's`,
+    title: `Books Requests`,
     url: '/admin/booksrequests',
   },
   {

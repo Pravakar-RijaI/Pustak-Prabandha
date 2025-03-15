@@ -48,6 +48,11 @@
   display: flex;
 }
 
+.examRollNo-field-div {
+  margin-right: 0.5rem;
+  width: 300px;
+}
+
 .username-field-div {
   margin-right: 0.5rem;
   width: 300px;

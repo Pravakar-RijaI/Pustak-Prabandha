@@ -9,6 +9,8 @@ import RecommendedBooks from "../recommendedBooks/RecommendedBooks";
 import Books from "../books/Books";
 import HeroSection from "../bannerHome/BannerHome2";
 import LibraryHero from "../bannerHome/BannerHome2";
+import ChatbotComponent from '../chatbot/Chatbot'
+
 // import FilterBooksForm from '../books/FilterBooksForm'
 // import BrowseCollectionBooks from '../books/BrowseCollectionBooks'
 const Home = () => {
@@ -34,6 +36,7 @@ const Home = () => {
         <Row>
           <FeaturedBooks></FeaturedBooks>
         </Row>
+        <ChatbotComponent />
       </div>
     </div>
   );

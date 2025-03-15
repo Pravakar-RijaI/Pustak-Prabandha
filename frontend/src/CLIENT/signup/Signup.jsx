@@ -10,6 +10,7 @@ const Signup = () => {
   const refUsername = useRef(null);
 
   const Empty_Form_Field = {
+    examRollNo: "",
     username: "",
     email: "",
     phone: "",
@@ -61,9 +62,10 @@ const Signup = () => {
 
       const loadingToastId = showLoadingToast();
 
-      const { username, email, phone, password } = textField;
+      const { examRollNo, username, email, phone, password } = textField;
 
       const response = await axios.post(API_URL, {
+        examRollNo,
         username,
         email,
         phone,
@@ -104,6 +106,26 @@ const Signup = () => {
         </div>
 
         <form onSubmit={HandleFormSubmit}>
+          {/* Exam Roll No Field */}
+          <div className="mb-3">
+            <label htmlFor="examRollNo" className="form-label">
+              Exam Roll-No
+            </label>
+            <input
+              type="text"
+              id="examRollNo"
+              name="examRollNo"
+              value={textField.examRollNo}
+              onChange={HandleOnChange}
+              className="form-control"
+              placeholder="Enter your exam roll-no"
+              required
+              ref={refUsername}
+              maxLength="20"
+              minLength="5"
+            />
+          </div>
+
           {/* Username Field */}
           <div className="mb-3">
             <label htmlFor="username" className="form-label">

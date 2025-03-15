@@ -56,7 +56,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "// {\r\n//     \"email\": \"amit.kc240@gmail.com\",\r\n//     \"password\": \"Amit@123\"\r\n// }\r\n\r\n{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin\"\r\n}",
+					"raw": "// {\r\n//     \"email\": \"pravakar@gmail.com\",\r\n//     \"password\": \"Pr@123\"\r\n// }\r\n\r\n{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -85,7 +85,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "// {\r\n//     \"username\": \"admin\" , \r\n//     \"email\" : \"admin@gmail.com\" ,\r\n//     \"phone\" : \"9847612345\" ,\r\n//     \"password\" : \"admin\",\r\n//     \"userType\" : \"admin_user\"\r\n// }\r\n{\r\n    \"username\": \"amitkc\" , \r\n    \"email\" : \"amit.kc240@gmail.com\" ,\r\n    \"phone\" : \"9847612345\" ,\r\n    \"password\" : \"Amitkc123@\"\r\n}",
+					"raw": "// {\r\n//     \"examRollNo\": \"0\" , \r\n//  \"username\": \"admin\" , \r\n//     \"email\" : \"admin@gmail.com\" ,\r\n//     \"phone\" : \"9847612345\" ,\r\n//     \"password\" : \"admin\",\r\n//     \"userType\" : \"admin_user\"\r\n// }\r\n{\r\n    \"examRollNo\": \"25717/077\" ,\r\n    \"username\": \"manish\" , \r\n    \"email\" : \"manish@gmail.com\" ,\r\n    \"phone\" : \"9862067366\" ,\r\n    \"password\" : \"Manish@123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -472,13 +472,13 @@
 			"response": []
 		},
 		{
-			"name": "Update User Detail (Username,Email,Password)",
+			"name": "Update User Detail (ExamRollNo,Username,Email,Password)",
 			"request": {
 				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n//     \"username\" : \"ram\"\r\n// , \"email\" :  \"random@gmail.com\"\r\n// , \"phone\" : \"9812121212\"\r\n// , \r\n\r\n\"old_password\" : \"!Random123\"\r\n, \"new_password\" : \"Amit@123\"\r\n }",
+					"raw": "{ \r\n//     \"examRollNo\" : \"25674/076\"\r\n// ,\r\n//     \"username\" : \"Akash\"\r\n// , \"email\" :  \"random@gmail.com\"\r\n// , \"phone\" : \"9812121212\"\r\n// , \r\n\r\n\"old_password\" : \"!Random123\"\r\n, \"new_password\" : \"Pra@123\"\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -527,7 +527,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bookId\":\"649688502b7ba4e870411173\",\r\n    \"userEmail\" : \"amit@gmail.com\"\r\n}",
+					"raw": "{\r\n    \"bookId\":\"649688502b7ba4e870411173\",\r\n    \"userEmail\" : \"Akash@gmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -557,7 +557,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"ami@gmail.com\",\r\n    \"phone\" : \"9847612345\"\r\n}",
+					"raw": "{\r\n    \"email\" : \"Akash@gmail.com\",\r\n    \"phone\" : \"9847612345\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -586,7 +586,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"userId\" : \"251175774afae22ac6166b6e\",\r\n    \"newPassword\" : \"amitkc\"\r\n}",
+					"raw": "{\r\n    \"userId\" : \"251175774afae22ac6166b6e\",\r\n    \"newPassword\" : \"manish\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -694,7 +694,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \r\n    \"userId\":\"64cfad59ba9e399c5ecfd957\", \r\n    \"newEmail\":\"amit.kc240@gmail.com\"\r\n}",
+					"raw": "{ \r\n    \"userId\":\"64cfad59ba9e399c5ecfd957\", \r\n    \"newEmail\":\"manish@gmail.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

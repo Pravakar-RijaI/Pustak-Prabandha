@@ -62,7 +62,7 @@ const sendEmail = async (to, otp) => {
 }
 
 const postUserSignup = async (req, res) => {
-  const { username, email, phone, userType, password } = req.body
+  const { examRollNo, username, email, phone, userType, password } = req.body
 
   // Alphanumeric password validation with Special character
   const alphanumericRegex =
@@ -90,6 +90,7 @@ const postUserSignup = async (req, res) => {
 
   if (!checkPrevUser || checkPrevUser === null) {
     const result = await UserModel.create({
+      examRollNo,
       username,
       email,
       password: hashedPassword,
@@ -204,7 +205,7 @@ const resendOtpCode = async (req, res) => {
   if (new Date() < getTokenData.expiresAt) {
     return res.status(200).json({
       success: true,
-      message: `OTP Code Already Sended !`,
+      message: `OTP Code Already Sent !`,
       ENTER_OTP: true,
     })
   }

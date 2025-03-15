@@ -44,6 +44,7 @@ const bookSchemeStructure = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  embedding: { type: Array, default: [] },
 })
 
 // Pre-save middleware

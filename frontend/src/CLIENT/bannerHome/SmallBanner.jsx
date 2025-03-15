@@ -4,7 +4,7 @@ import './smallbanner.css'
 
 const SmallBanner = () => {
   return (
-    <div className='div-with-background border mt-5'>
+    <div className='div-with-background border mt-5 mb-5'>
       <Container>
         <Row className='quote-container mt-5 me-1'>
           <h1>"Happiness is only real when shared"</h1>

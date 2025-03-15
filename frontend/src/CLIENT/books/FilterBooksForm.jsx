@@ -1,236 +1,188 @@
-import React, { useState, useEffect } from 'react'
-import { backend_server } from '../../main'
-import axios from 'axios'
-
-import './filterbooksform.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { backend_server } from "../../main";
 
 const FilterBooksForm = ({ setBookData, setSearchResult, setFilterActive }) => {
-  const API_URL_FILTER = `${backend_server}/api/v1/filter`
-  const API_ALLBOOKS_URL = `${backend_server}/api/v1/books`
+  const API_URL_FILTER = `${backend_server}/api/v1/filter`;
+  const API_URL_SEMANTIC_SEARCH = `${backend_server}/api/v1/semantic-search`;
+  const API_URL_AI_SEARCH = `${backend_server}/api/v1/ai-search`;
+  const API_ALLBOOKS_URL = `${backend_server}/api/v1/books`;
+
   const empty_field = {
-    title: '',
-    category: '',
-    author: '',
-    language: '',
-  }
+    title: "",
+    category: "",
+    author: "",
+    language: "",
+  };
 
-  const [filterFields, setFilterFields] = useState(empty_field) //Filter FORM Fields Data
-  const [categories, setCategories] = useState([]) //all books CATEGORIES
-  const [author, setAuthor] = useState([])
-  const [language, setLanguage] = useState([])
-
-  // Form Submit handle (FILTER data Fetched)
-  const handleFormSubmit = async (e) => {
-    e.preventDefault()
-
-    // Checking if user falsly hit search without making any changes
-    // this fixes -> empty fields search means fetching all data which we dont want
-    if (JSON.stringify(filterFields) === JSON.stringify(empty_field)) {
-      return setFilterActive(false)
-    }
-    setFilterActive(true)
-
-    const { title, category, author, language } = filterFields
-    try {
-      const response = await axios.get(API_URL_FILTER, {
-        params: {
-          title,
-          category,
-          author,
-          language,
-        },
-      })
-
-      let totalHits = response.data.total
-      // console.log(totalHits)
-      if (totalHits == 0) {
-        setSearchResult(false)
-      }
-
-      setBookData(response.data.data)
-      // console.log(filterFields)
-    } catch (error) {
-      console.log(error)
-      console.log(error.response)
-    }
-  }
-
-  // FORM INPUT FIELDS On Change Handlers
-  const handleSearchTitleOnChange = (e) => {
-    const { name, value } = e.target
-    setFilterFields({ ...filterFields, [name]: value })
-  }
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value
-    setFilterFields({ ...filterFields, category: selectedCategory })
-  }
-  const handleAuthorChange = (e) => {
-    const selectedAuthor = e.target.value
-    setFilterFields({ ...filterFields, author: selectedAuthor })
-  }
-  const handleLanguageChange = (e) => {
-    const selectedLanguage = e.target.value
-    setFilterFields({ ...filterFields, language: selectedLanguage })
-  }
-
-  // Fetch ALL  Book Categories / Author / Language
-  const fetchAllCategories = async () => {
-    try {
-      const response = await axios.get(API_ALLBOOKS_URL)
-
-      const bookCategories = [
-        ...new Set(
-          response.data.data.map((category_para) => {
-            return category_para.category
-          })
-        ),
-      ]
-
-      const bookAuthor = [
-        ...new Set(
-          response.data.data.map((author_para) => {
-            return author_para.author
-          })
-        ),
-      ]
-
-      const bookLanguage = [
-        ...new Set(
-          response.data.data.map((language_para) => {
-            return language_para.language
-          })
-        ),
-      ]
-
-      // console.log(bookCategories)
-      // console.log(bookAuthor)
-      // console.log(bookLanguage)
-
-      setCategories(bookCategories)
-      setAuthor(bookAuthor)
-      setLanguage(bookLanguage)
-    } catch (error) {
-      console.log(error.response)
-    }
-  }
+  const [filterFields, setFilterFields] = useState(empty_field);
+  const [categories, setCategories] = useState([]);
+  const [authors, setAuthors] = useState([]);
+  const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
-    fetchAllCategories()
-  }, [])
+    fetchAllCategories();
+  }, []);
 
-  // Clears the FORM value and Filter
-  const handleClearFilter = () => {
-    setFilterFields(empty_field)
-    setCategories([])
-    setAuthor([])
-    setLanguage([])
+  const fetchAllCategories = async () => {
+    try {
+      const response = await axios.get(API_ALLBOOKS_URL);
+      const books = response.data.data;
 
-    // After clearing all FORM Field , we have to refetch all Categories,Author's and Language's
-    fetchAllCategories()
-  }
+      setCategories([...new Set(books.map((book) => book.category))]);
+      setAuthors([...new Set(books.map((book) => book.author))]);
+      setLanguages([...new Set(books.map((book) => book.language))]);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  // **🔹 Handles Search Button Click**
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFilterActive(true);
+
+    const { title, category, author, language } = filterFields;
+    const filtersApplied = category || author || language;
+
+    try {
+      let response;
+
+      // **Step 1: If filters are applied, use normal filtering**
+      if (filtersApplied || title) {
+        response = await axios.get(API_URL_FILTER, { params: filterFields });
+
+        if (response.data.total > 0) {
+          setBookData(response.data.data);
+          setSearchResult(true);
+          return;
+        }
+      }
+
+      // **Step 2: If title is provided, use Semantic Search**
+      if (title) {
+        response = await axios.post(API_URL_SEMANTIC_SEARCH, { searchQuery: title });
+
+        if (response.data.total > 0) {
+          setBookData(response.data.data);
+          setSearchResult(true);
+          return;
+        }
+      }
+
+      // **Step 3: If semantic search fails, use AI Search as fallback**
+      if (title) {
+        response = await axios.post(API_URL_AI_SEARCH, { searchQuery: title });
+
+        if (response.data.total > 0) {
+          setBookData(response.data.data);
+          setSearchResult(true);
+          return;
+        }
+      }
+
+      // **Step 4: If all searches fail, show no results**
+      setBookData([]);
+      setSearchResult(false);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+      setSearchResult(false);
+    }
+  };
+
+  // **🔹 Handles Input Changes**
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilterFields({ ...filterFields, [name]: value });
+  };
+
+  const handleClearFilter = async () => {
+    setFilterFields(empty_field);
+    setSearchResult(true);
+    setFilterActive(false);
+    setBookData([]);
+
+    try {
+      const response = await axios.get(API_ALLBOOKS_URL);
+      setBookData(response.data.data);
+
+      const bookCategories = [...new Set(response.data.data.map((book) => book.category))];
+      const bookAuthors = [...new Set(response.data.data.map((book) => book.author))];
+      const bookLanguages = [...new Set(response.data.data.map((book) => book.language))];
+
+      setCategories(bookCategories);
+      setAuthors(bookAuthors);
+      setLanguages(bookLanguages);
+    } catch (error) {
+      console.error("Error fetching books and dropdown data after reset:", error);
+    }
+  };
 
   return (
-    <div className='container '>
-      <div className='row my-3 justify-content-center'>
-        <div className='col-md-8'>
-          <form method='get' className='form-inline d-flex'>
-            {/* Search Filter */}
-            <div className='form-group mx-1 my-1  col-xl-4'>
+    <div className="container">
+      <div className="row my-3 justify-content-center">
+        <div className="col-md-10">
+          <form method="get" className="d-flex flex-wrap align-items-center">
+            
+            {/* 🔹 Search Input */}
+            <div className="form-group col-lg-4 col-md-6 px-1">
               <input
-                type='text'
-                className='form-control mx-1'
-                autoComplete='off'
-                placeholder='Search by title . . .'
-                name='title'
+                type="text"
+                className="form-control"
+                autoComplete="off"
+                placeholder="Search by title, topic..."
+                name="title"
                 value={filterFields.title}
-                onChange={handleSearchTitleOnChange}
+                maxLength={50}
+                onChange={handleInputChange}
               />
             </div>
 
-            {/* Category Filter */}
-            <div className='form-group mx-1 my-1 col-xl-2'>
-              <select
-                className='form-control mx-1'
-                defaultValue=''
-                onChange={handleCategoryChange}
-              >
-                <option key='' value=''>
-                  Categories
-                </option>
-                {categories.map((books_category) => {
-                  return (
-                    <option key={books_category} value={books_category}>
-                      {books_category}
-                    </option>
-                  )
-                })}
+            {/* 🔹 Category Filter */}
+            <div className="form-group col-lg-2 col-md-3 px-1">
+              <select className="form-control" value={filterFields.category} name="category" onChange={handleInputChange}>
+                <option key="" value="">Categories</option>
+                {categories.map((books_category) => (
+                  <option key={books_category} value={books_category}>{books_category}</option>
+                ))}
               </select>
             </div>
 
-            {/* Author Filter */}
-            <div className='form-group mx-1 my-1 col-xl-2'>
-              <select
-                className='form-control mx-1'
-                defaultValue=''
-                onChange={handleAuthorChange}
-              >
-                <option key='' value=''>
-                  Author
-                </option>
-                {author.map((books_author) => {
-                  return (
-                    <option key={books_author} value={books_author}>
-                      {books_author}
-                    </option>
-                  )
-                })}
+            {/* 🔹 Author Filter */}
+            <div className="form-group col-lg-2 col-md-3 px-1">
+              <select className="form-control" value={filterFields.author} name="author" onChange={handleInputChange}>
+                <option key="" value="">Author</option>
+                {authors.map((books_author) => (
+                  <option key={books_author} value={books_author}>{books_author}</option>
+                ))}
               </select>
             </div>
 
-            {/* Language Filter */}
-            <div className='form-group mx-1 my-1 col-xl-2'>
-              <select
-                className='form-control mx-1'
-                defaultValue='all'
-                onChange={handleLanguageChange}
-              >
-                <option key='' value=''>
-                  Language
-                </option>
-                {language.map((books_language) => {
-                  return (
-                    <option key={books_language} value={books_language}>
-                      {books_language.toUpperCase()}
-                    </option>
-                  )
-                })}
+            {/* 🔹 Language Filter */}
+            <div className="form-group col-lg-2 col-md-3 px-1">
+              <select className="form-control" value={filterFields.language} name="language" onChange={handleInputChange}>
+                <option key="" value="">Language</option>
+                {languages.map((books_language) => (
+                  <option key={books_language} value={books_language.toUpperCase()}>{books_language.toUpperCase()}</option>
+                ))}
               </select>
             </div>
 
-            <div
-              className='col-xl-2 d-flex text-center '
-              style={{ width: 'fit-content' }}
-            >
-              <button
-                type='submit'
-                className='btn btn-success mx-1 my-1 '
-                onClick={handleFormSubmit}
-              >
+            {/* 🔹 Search & Clear Buttons */}
+            <div className="form-group col-lg-2 col-md-3 d-flex px-1">
+              <button type="submit" className="btn btn-success w-50 mx-1" onClick={handleFormSubmit}>
                 Search
               </button>
-              <button
-                type='button'
-                className='btn btn-danger mx-1 my-1'
-                onClick={handleClearFilter}
-              >
-                Clear Filter
+              <button type="button" className="btn btn-danger w-50 mx-1" onClick={handleClearFilter}>
+                Clear
               </button>
             </div>
+
           </form>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FilterBooksForm
+export default FilterBooksForm;

@@ -12,7 +12,11 @@ footer {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 0; 
+  /* changes */
+  width: 100%;
+  /* margin-top: auto; */
+  /* padding: 1rem 0; */
 }
 
 /* Footer to bottom stick */
@@ -30,6 +34,10 @@ body {
   min-height: 100%;
   padding-bottom: 10rem;
   box-sizing: inherit;
+
+  /* //changes */
+  display: flex;
+  flex-direction: column;
 }
 
 @media screen and (max-width: 768px) {

@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './navbar.css'
 
+//here it is  remove this ok 
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 // Importing all Navbar data's i.e. title,logo,links,etc
 import navbarData from './adminnavbardata'
 
@@ -11,19 +14,20 @@ const AdminNavbar = () => {
   return (
     <nav className='navbar admin-navbar navbar-expand-xl '>
       <div className='container-fluid'>
-        <Link to='/admin' className='a'>
+        <Link to='/admin' className='navbar-brand'>
           <img
             src={navbarImage}
             alt='Logo'
             width={'50'}
-            className='d-sm-inline-block d-none'
+            // className='d-sm-inline-block d-none'
+            className="d-inline-block"
           />
-          <h4 className='h4 d-inline ' id='navbar-title-text'>
+          <h4 className='h4 d-inline text-white' id='navbar-title-text'>
             {navbarTitle}
           </h4>
         </Link>
 
-        <button
+        {/* <button
           id='navbar-mobileview-btn'
           className='navbar-toggler'
           type='button'
@@ -34,7 +38,7 @@ const AdminNavbar = () => {
           aria-label='Toggle navigation'
         >
           <span className='navbar-toggler-icon' />
-        </button>
+        </button> */}
 
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul className='navbar-nav  mb-2 mb-lg-0 fs-5'>

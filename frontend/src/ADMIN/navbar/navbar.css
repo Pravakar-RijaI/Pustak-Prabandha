@@ -1,8 +1,12 @@
 .admin-navbar {
-  background-color: #e3f2fd;
+  /* background-color: #e3f2fd; */
+  background-color: #0D6EFD !important;
+  /* background: linear-gradient(135deg, #6a11cb, #2575fc);Gradient background */
   position: fixed !important;
   width: 100%;
   z-index: 1000;
+  /* to make it radius ok  */
+  border: 2.5px solid #007bff;  /* Blue border with 2px thickness */
 }
 
 /* Gap between navbar links */
@@ -27,6 +31,10 @@ li {
 .a:hover {
   color: black;
 }
+/* from cccc ok  */
+
+
+/* up to here ok  */
 
 /* rendering based on if user logged or not */
 #nav-conditional-rendering {

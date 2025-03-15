@@ -40,7 +40,6 @@ const AdminSignup = () => {
       // Validate email format
       const emailRegex = /^[A-Za-z0-9._%+-]+@gmail\.com$/
       const isValid = emailRegex.test(textField.email)
-      // console.log(isValid)
       if (!isValid) {
         setLoading(false)
         return toast.error('Invalid Email Format')
@@ -95,9 +94,6 @@ const AdminSignup = () => {
     } catch (error) {
       console.log(error)
       console.log(error.response)
-      // const userAlreadyExists = error.response.data.message
-      // toast.error(userAlreadyExists)
-      // setErrorFeedback('Invalid Format')
     }
   }
 
@@ -112,18 +108,18 @@ const AdminSignup = () => {
   }, [])
 
   return (
-    <div className='signup-maindiv'>
+    <div className='admin-signup-container'>
       {/* TOP DIV */}
-      <div className='signup-upperdiv text-center'>
+      <div className='admin-signup-header text-center'>
         <h2>Create Admin Account</h2>
       </div>
 
       {/* MIDDLE DIV */}
-      <div className='signup-middlediv'>
+      <div className='admin-signup-form'>
         <form onSubmit={HandleFormSubmit} method='post'>
           <div className='first-row-form'>
-          <div className='examRollNo-field-div'>
-              <label htmlFor='examRollNofield'>Exam Roll-No : </label>
+            <div className='examRollNo-field-div'>
+              <label htmlFor='examRollNofield'>Exam Roll-No: </label>
               <input
                 type='text'
                 placeholder='Enter Exam Roll Number..'
@@ -191,7 +187,6 @@ const AdminSignup = () => {
               <label htmlFor='passwordfield'>Password : </label>
               <div className='password-field'>
                 <input
-                  // type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
                   type='password'
                   placeholder='Enter Password'
                   id='passwordfield'
@@ -209,7 +204,7 @@ const AdminSignup = () => {
               <label htmlFor='passwordfield2'>Confirm Password : </label>
               <div className='password-field'>
                 <input
-                  type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
+                  type={showPassword ? 'text' : 'password'}
                   placeholder='Confirm Password'
                   id='passwordfield2'
                   value={textField.confirm_password}
@@ -240,12 +235,6 @@ const AdminSignup = () => {
       </div>
 
       {/* LOWER DIV */}
-      {/* <div className='signup-lowerdiv'>
-        <p>Already have an Account ? </p>
-        <Link to='/login'>
-          <button>Login</button>
-        </Link>
-      </div> */}
     </div>
   )
 }

@@ -64,10 +64,10 @@ const postSingleUser = async (req, res) => {
 // Update User Details (CLIENT SIDE)
 const patchUserDetail = async (req, res) => {
   const userId = req.userId
-  const { username, email, phone, old_password, new_password } = req.body
+  const { examRollNo, username, email, phone, old_password, new_password } = req.body
 
   // Updates Username,email and phone
-  if (username && email && phone) {
+  if (examRollNo && username && email && phone) {
     const UserDetails = await UserModel.findById({ _id: userId })
     const { email: oldEmail } = UserDetails
     const newEmail = await ConvertEmail(email)
@@ -76,7 +76,7 @@ const patchUserDetail = async (req, res) => {
     if (oldEmail == newEmail) {
       const result = await UserModel.findByIdAndUpdate(
         userId,
-        { username, phone },
+        {examRollNo, username, phone },
         {
           new: true,
           runValidators: true,
@@ -118,6 +118,7 @@ const patchUserDetail = async (req, res) => {
         {
           email: newEmail,
           emailVerified: false,
+          examRollNo,
           username,
           phone,
         },

@@ -12,6 +12,15 @@ li {
   color: black;
   background-color: rgba(109, 184, 235, 0.938);
 }
+/* here we going to make gap between image and navbarTitle ok  */
+.navbar-brand img {
+   margin-right: 0.8rem; /*Adjust the gap as needed*/
+}
+
+/* .navbar-brand h4 {
+  margin-left: 0.5rem;  Adjust the gap as needed 
+} */
+
 
 .a {
   text-decoration: none;
@@ -28,14 +37,18 @@ li {
 
 @media screen and (max-width: 1199px) {
   #nav-conditional-rendering {
-    display: flex;
-    flex-direction: column;
+    display: block !important;
   }
 }
 
 /* Navbar mobile button */
 #navbar-mobileview-btn {
   box-shadow: none;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 380px) {

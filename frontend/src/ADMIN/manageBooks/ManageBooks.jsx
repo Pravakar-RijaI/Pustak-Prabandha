@@ -57,7 +57,7 @@ const ManageBooks = () => {
   }, [])
 
   return (
-    <div className='container mt-2'>
+    <div className='container mt-5'>
       <h1 className='h1 text-center'>Manage Books </h1>
 
       <div className='row my-3'>

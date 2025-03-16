@@ -2,6 +2,12 @@
 const mongoose = require('mongoose')
 
 const signUpScheme = mongoose.Schema({
+  examRollNo:{
+    type: String,
+    minlength: 5,
+    maxlength: 20,
+    required: true,
+  },
   username: {
     type: String,
     minlength: 5,
@@ -65,7 +71,8 @@ const signUpScheme = mongoose.Schema({
 
 // Pre-save hook to convert input values to lowercase/uppercase
 signUpScheme.pre('save', function (next) {
-  this.username = this.username.toLowerCase()
+  this.examRollNo = this.examRollNo.toLowerCase();
+  this.username = this.username.toLowerCase();
 
   // Converting only domain `@gmail.com` to lowerCase
   const emailParts = this.email.split('@')

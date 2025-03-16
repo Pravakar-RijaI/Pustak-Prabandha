@@ -15,7 +15,7 @@ const ViewUsers = () => {
   }, [data])
 
   return (
-    <div className='container mt-2'>
+    <div className='container mt-5'>
       <h1 className='h1 text-center'>View User's</h1>
 
       <div className='row mt-3'>
@@ -23,7 +23,7 @@ const ViewUsers = () => {
           <table className='table table-hover'>
             <thead>
               <tr>
-                <th scope='col'>#</th>
+                <th scope='col'>Exam-RollNo</th>
                 <th scope='col'>Username</th>
                 <th scope='col'>Email</th>
                 <th scope='col'>Phone</th>
@@ -34,12 +34,12 @@ const ViewUsers = () => {
             <tbody>
               {totalUsers &&
                 totalUsers.map((user, index) => {
-                  const { _id, username, email, phone, totalAcceptedBooks } =
+                  const { _id, examRollNo, username, email, phone, totalAcceptedBooks } =
                     user
 
                   return (
                     <tr key={_id}>
-                      <th scope='row'>{index + 1}</th>
+                      <th scope='row'>{examRollNo}</th>
                       <td>{username}</td>
                       <td>{email}</td>
                       <td>{phone}</td>

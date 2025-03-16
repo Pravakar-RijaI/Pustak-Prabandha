@@ -2,8 +2,34 @@ const BookTransaction = require("../models/bookTransaction");
 const BookSchema = require("../models/bookScheme");
 const PopularBookSchema = require("../models/PopularBooks");
 const UserSchema = require("../models/signUpModel");
-
+const nodemailer = require("nodemailer");
 const UserLastBookModel = require("../models/userLastBook");
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USERNAME, // Replace with your email
+    pass: process.env.EMAIL_PASSWORD, // Replace with your app password
+  },
+});
+
+const sendEmailNotification = async (email, subject, text) => {
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: email,
+    subject: subject,
+    text: text,
+  };
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log(`Email sent to ${email}`);
+  } catch (error) {
+    console.error("Email sending failed:", error);
+  }
+};
 
 // Creates a new User book request transaction
 const postBooks = async (req, res) => {
@@ -156,6 +182,8 @@ const postIssueBooks = async (req, res) => {
       totalRequestedBooks: updatedTotalRequestedBooks,
     });
 
+    await sendEmailNotification(userEmail, "Book Issued", `Your book "${book.title}" has been issued.`);
+
     // Store users last borrowed book
     const checkUsersLastBook = await UserLastBookModel.find({ userId });
     if (checkUsersLastBook.length != 0) {
@@ -270,7 +298,7 @@ const patchRequestedBooks = async (req, res) => {
     const updatedTotalRequestedBooks = totalRequestedBooks - 1;
 
     // is returned = true , means bookTransaction status is to be set to - "RETURNED"
-    await BookTransaction.findByIdAndUpdate(
+    const updatedTransaction = await BookTransaction.findByIdAndUpdate(
       id,
       {
         issueStatus: "RETURNED",
@@ -285,14 +313,22 @@ const patchRequestedBooks = async (req, res) => {
       totalAcceptedBooks: updatedTotalAcceptedBooks,
       totalRequestedBooks: updatedTotalRequestedBooks,
     });
+
+    await sendEmailNotification(updatedTransaction.userEmail, "Book Returned", `You have returned "${updatedTransaction.bookTitle}". Fine: $${updatedTransaction.extraCharge}`);
+
   }
 
   // If "ACCEPTED" then push that into popular books collection
   if (issueStatus === "ACCEPTED") {
     // update issueDate and returnDate
+    const isPopularBook = await PopularBookSchema.findOne({ bookId, isPopular: true });
+
+    const returnDays = isPopularBook ? 7 : 10; // 7 days for popular books, 10 for others
+    const returnDate = new Date(Date.now() + returnDays * 24 * 60 * 60 * 1000);
+
     await BookTransaction.findByIdAndUpdate(id, {
       issueDate: new Date(),
-      returnDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // Add 10 days to the current date
+      returnDate: returnDate, // Add 10 days to the current date
     });
 
     // increment users TotalAcceptedBooks
@@ -323,6 +359,9 @@ const patchRequestedBooks = async (req, res) => {
         lastBorrowedBookTitle: bookTitle,
       });
     }
+    
+    await sendEmailNotification(result.userEmail, "Book Ready for Pickup", `Your book "${result.bookTitle}" is ready for pickup.`);
+
 
     createOrUpdatePopularBook(bookId, bookTitle);
   } else if (issueStatus === "CANCELLED") {
@@ -347,25 +386,32 @@ const createOrUpdatePopularBook = async (bookId, bookTitle) => {
   const checkPopularBook = await PopularBookSchema.findOne({ bookId });
 
   if (!checkPopularBook) {
-    // If book does not exist in popular collection, create a new one
+    // If book does not exist, initialize issue count to 1
     await PopularBookSchema.create({
       bookId,
       bookTitle,
+      issueQuantity: 1, // Start tracking issue count
     });
   } else {
-    // If book already exists in popular collection, increment issueQuantity
+    // Increment the issue count
     const updatedIssueQuantity = checkPopularBook.issueQuantity + 1;
-
     await PopularBookSchema.findOneAndUpdate(
       { bookId },
       { issueQuantity: updatedIssueQuantity },
-      {
-        new: true, // Return the updated document
-        runValidators: true, // Run validation rules on update
-      }
+      { new: true, runValidators: true }
     );
+
+    // If the book has been issued more than 5 times, mark it as popular
+    if (updatedIssueQuantity >= 5) {
+      await PopularBookSchema.findOneAndUpdate(
+        { bookId },
+        { isPopular: true },
+        { new: true, runValidators: true }
+      );
+    }
   }
 };
+
 
 module.exports = {
   postBooks,

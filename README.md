@@ -1,120 +1,92 @@
 # Pustak Prabandha 📚
 
-A Intelligent library management agent with AI capabilities and recommendation algorithm.
+Pustak Prabandha is a MERN-stack-based Library Management System (LMS) designed to enhance user experience with seamless book browsing, requesting, and monitoring features. It incorporates AI-driven functionalities, semantic search, and personalized recommendations to improve book discovery and user engagement.
 
-**_NOTE : This isn't an Ecommerce Website (There is no Payment System here)_**
+## Features
 
-FrontEnd is divided into two parts (ADMIN && CLIENT)
+### Admin Features
+- **Book Management**: Add, update, and remove books.
+- **User Management**: View user details, track borrowed books, and manage transactions.
+- **Book Requests**: Approve or reject book requests, update book status, and handle lost book reports.
+- **Fine & Payment System**: Automatic fine calculation for overdue books and lost books, with eSewa integration for online payments.
+- **Notifications**: Send alerts for book availability, due dates, fines, and request status.
 
-ADMIN can do -  
-`1.manage books i.e. add/remove/update/delete books.`
+### Client Features
+- **Book Search & Discovery**: AI-powered semantic search and content-based recommendation system.
+- **Book Borrowing**: Request books and track borrowed items.
+- **Profile Management**: Update personal information and view book history.
+- **Notifications**: Receive updates on due dates, fines, and book availability.
+- **Payments**: Pay fines through eSewa.
 
-`2.Check user' details i.e. name/id/borrowed book/etc`
-
-`3.Confirm user's book request && Confirm book Return`
-
-`4.Manage Book Charges(Extra fee's for not returing book in time)`
-
-CLIENT can do -  
-`1.Basic book surfing's and checking availablities`
-
-`2.Request for a book`
-
-`3.Viewing/CRUD Operations on Profile || Dashboard`
-
-## Version Specifications :
-
+## Version Specifications
 1. NodeJS : v18.16.0
 2. Express : v4.18.2
 3. ReactJS : v18.2.0
-4. Using MongoDB: v6.0.6
-   Using Mongosh: v2.0.2
+4. MongoDB: v6.0.6
+5. Mongosh: v2.0.2
 
-## Demo
+## Installation Guide
 
+### How to run the project locally
 
+1. **Clone the Repository**:
+   ```sh
+   git clone https://github.com/Pravakar-RijaI/Pustak-Prabandha.git
+   ```
+2. **Navigate to Both 'Frontend' and 'Backend' Folders**:
+   ```sh
+   cd frontend  
+   cd backend
+   ```
+3. **Install Dependencies**:
+   ```sh
+   npm install
+   ```
+4. **Start the Frontend and Backend**:
+   ```sh
+   npm run dev
+   ```
 
-## Documentation
+5. **Database Setup (MongoDB)**:
+   - Ensure MongoDB is running.
+   - Open MongoDB Compass (if not installed, download it).
+   - Import JSON files from the `mongoDatabase` folder into respective collections.
 
-You can find the Documentation inside docs/Pustak-Prabandha-Project-Report.pdf
-![](./docs/Pustak-Prabandha-Project-Report.pdf)
-
-## How to run Project locally :
-
-1. Clone the project
-
-```bash
-  git clone https://github.com/Pravakar-RijaI/Pustak-Prabandha.git
-```
-
-2. Goto Both 'Frontend' and 'Backend' folder
-
-```bash
-  cd frontend , cd backend
-```
-
-3. Install dependencies on Both Frontend & Backend
-
-```bash
-  npm install
-```
-
-**NOTE : In 'backend' make sure to create a '.env' file and copy paste the values of '.env.example' into newly created '.env' file**
-
-4. Start the Frontend and Backend
-
-**NOTE : If you have any issues or queries about Backend, refer to /backend/BackendInfo/ folder for details**
-```bash
-  npm run dev
-```
-
-5. Once you Run Backend(Server), database will be created automatically on Mongodb & You just have to Import the TABLE Data which is Stored in folder 'mongoDatabase'
-
-**For Backend :**
-
-`make sure your MondoDB server is running (you can check this via windows Services)`
-
-`open the mongoDB Compass (GUI for mongodb,download if u dont have) and from there you can import the data into respective collections` 
-
-```bash
-Import respective .JSON file into database Collection
-```
-
-## How to run Project using Docker :
-
-- Populate localhost mongodb database (explained in Step5 above).
-- goto .env and make sure to use correct 'CONNECTION_URL'
-- then, goto main folder location i.e. cd Pustak-Prabandha/ and use command :
-
-```
-docker-compose up
-```
-
+   ```sh
+   Import respective .JSON file into database Collection
+   ```
+   
 ## Login Credentials
 
-Starter Login Credentials : (Make sure to import database collections i.e. userdetails json file into the collections)
+Starter Login Credentials (Ensure database collections are imported):
 
-1. ADMIN (user_type = "admin_user" ):
+1. **Admin User (user_type = "admin_user")**:
+   ```
+   Email : admin@gmail.com  
+   Password : admin
+   ```
 
-```
- Email : admin@gmail.com , Password : admin
-```
-
-2. Normal User Can be created by SignUp Page (user_type = "normal_user" ):
+2. **Normal User (user_type = "normal_user")**:
+   - Can be created through the Sign-Up page.
 
 ## Lessons Learned
 
-1. Code Comments are Loveletter's you leave behind for your future self.
-2. If you cant Solve it, address it for your Future Self. He sure can!
+1. Code comments are love letters you leave behind for your future self.
+2. If you can't solve it now, document it for your future self – they might have the answer!
 
 ## Tech Stack
 
-**Frontend :** React, Bootstrap
+**Frontend:** React, Bootstrap
 
-**Backend :** Node, Express, MongoDB
+**Backend:** Node, Express, MongoDB
 
-#### Developed By :-
+## Contributors
 
-1. Pravakar Rijal
-2. Manish Dhungana
-3. Akash Tolange
+Developed By:
+
+1. <a href="https://github.com/Pravakar-RijaI">Pravakar Rijal</a>
+2. <a href="https://github.com/ManishDhungana758">Manish Dhungana</a>
+3. <a href="https://github.com/AkashTolange">Akash Tolange</a>
+
+For any issues or suggestions, please open an issue on the [GitHub repository](https://github.com/Pravakar-RijaI/Pustak-Prabandha).
+

@@ -1,4 +1,4 @@
-# Pustak Prabandha 📚
+# Pustak Prabandha: An Intelligent Library Assistant
 
 Pustak Prabandha is a MERN-stack-based Library Management System (LMS) designed to enhance user experience with seamless book browsing, requesting, and monitoring features. It incorporates AI-driven functionalities, semantic search, and personalized recommendations to improve book discovery and user engagement.
 

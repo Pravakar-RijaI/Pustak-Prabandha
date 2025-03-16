@@ -12,6 +12,15 @@ li {
   color: black;
   background-color: rgba(109, 184, 235, 0.938);
 }
+/* here we going to make gap between image and navbarTitle ok  */
+.navbar-brand img {
+   margin-right: 0.8rem; /*Adjust the gap as needed*/
+}
+
+/* .navbar-brand h4 {
+  margin-left: 0.5rem;  Adjust the gap as needed 
+} */
+
 
 .a {
   text-decoration: none;

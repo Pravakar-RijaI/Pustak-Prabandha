@@ -24,12 +24,13 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-xl py-2 px-3 bg-primary shadow-sm sticky-top">
       <div className="container-fluid">
-        <Link to="/" className="a">
+        <Link to="/" className="navbar-brand">
           <img
             src={navbarImage}
             alt="Logo"
             width={"50"}
-            className="d-sm-inline-block d-none"
+            // className="d-sm-inline-block d-none"
+            className="d-inline-block"
           />
           <h4 className="h4 d-inline text-white " id="navbar-title-text">
             {navbarTitle}

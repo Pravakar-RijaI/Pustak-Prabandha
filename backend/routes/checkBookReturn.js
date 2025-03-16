@@ -51,7 +51,7 @@ const sendFineNotification = (userEmail, bookTitle, daysOverdue, fineAmount) => 
     from: process.env.EMAIL_USERNAME, 
     to: userEmail,
     subject: 'Overdue Book Fine Notification',
-    text: `Dear User,\n\nYour book "${bookTitle}" is overdue by ${daysOverdue} days. A fine of ₹${fineAmount} has been applied.\n\nPlease return the book as soon as possible to avoid further fines.\n\nRegards,\nLibrary Management System`,
+    text: `Dear User,\n\nYour book "${bookTitle}" is overdue by ${daysOverdue} days. A fine of ₹${fineAmount} has been applied.\n\nPlease return the book as soon as possible to avoid further fines.\n\nRegards,\nPustak Prabandha`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {

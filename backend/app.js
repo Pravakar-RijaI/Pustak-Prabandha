@@ -30,6 +30,8 @@ const semanticSearchRouter = require("./routes/semanticSearchRouter");
 const aiChatbotRouter = require("./routes/aiChatbotRouter");
 const filterRouter = require("./routes/filterRoutes");
 
+const payFineRouter = require("./routes/payFineRouter");
+
 const adminHomePageInfoRouter = require("./routes/adminHomePageInfoRoute");
 
 const CustomError = require("./errorHandler/CustomError");
@@ -68,6 +70,7 @@ app.use("/api/v1/filter", filterRouter);
 app.use("/api/v1/ai-search", aiSearchRouter);
 app.use("/api/v1/semantic-search", semanticSearchRouter);
 app.use("/api/v1/ai-chatbot", aiChatbotRouter);
+app.use("/api/v1",payFineRouter);
 
 // ALL BOOKS CRUD (Dynamic Middleware Setup on API Endpoints)
 app.use("/api/v1/books", booksRouter);
